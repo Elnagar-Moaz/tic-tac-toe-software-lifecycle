@@ -1,0 +1,50 @@
+name: Java CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "feature/**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Java 21 aufsetzen
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Automatische Tests ausführen
+        run: mvn clean test
+
+  deploy-jar:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Java 21 aufsetzen
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: JAR-Datei bauen
+        run: mvn clean package -DskipTests
+
+      - name: JAR als Download bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: tic-tac-toe-game
+          path: target/*.jar
