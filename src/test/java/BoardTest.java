@@ -34,4 +34,22 @@ public class BoardTest {
         assertFalse(board.place(2, 2, 'O'));
         assertEquals('X', board.getCell(2, 2)); // Es muss immer noch 'X' drin stehen
     }
+    @Test
+    public void testGetBoardState_Empty() {
+        Board board = new Board();
+        String expected = "   |   |   \n-----------\n   |   |   \n-----------\n   |   |   \n";
+        assertEquals(expected, board.getBoardState());
+    }
+
+    @Test
+    public void testGetBoardState_WithSymbols() {
+        Board board = new Board();
+        board.place(0, 0, 'X');
+        board.place(1, 1, 'O');
+
+        String state = board.getBoardState();
+        // Positiv-Check: Die gesetzten Symbole müssen im String auftauchen
+        assertTrue(state.contains(" X |   |   "));
+        assertTrue(state.contains("   | O |   "));
+    }
 }

@@ -37,4 +37,17 @@ public class Board {
     public char getCell(int row, int col) {
         return cells[row][col];
     }
+    // US-02: Gibt das Spielfeld formatiert als String zurück
+    public String getBoardState() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            sb.append(" ").append(cells[i][0]).append(" | ")
+                    .append(cells[i][1]).append(" | ")
+                    .append(cells[i][2]).append(" \n");
+            if (i < 2) {
+                sb.append("-----------\n");
+            }
+        }
+        return sb.toString();
+    }
 }
