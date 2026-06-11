@@ -39,12 +39,31 @@ public class Board {
     }
 
     public void print() {
+        System.out.println("    1   2   3");
+        System.out.println("  ┌───┬───┬───┐");
+
         for (int i = 0; i < 3; i++) {
-            System.out.println(" " + cells[i][0] + " | " + cells[i][1] + " | " + cells[i][2] + " ");
+            System.out.print((i + 1) + " │");
+
+            for (int j = 0; j < 3; j++) {
+                char cell = cells[i][j];
+
+                if (cell == '\0') {
+                    cell = ' ';
+                }
+
+                System.out.print(" " + cell + " │");
+            }
+
+            System.out.println();
+
             if (i < 2) {
-                System.out.println("-----------");
+                System.out.println("  ├───┼───┼───┤");
             }
         }
+
+        System.out.println("  └───┴───┴───┘");
+        System.out.println();
     }
 
     // Hilfsmethode für die Gewinnprüfung
