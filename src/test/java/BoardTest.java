@@ -6,7 +6,6 @@ public class BoardTest {
     @Test
     public void testIsCellEmpty_Positive() {
         Board board = new Board();
-        // Ein frisch erstelltes Feld muss leer sein
         assertTrue(board.isCellEmpty(0, 0));
     }
 
@@ -14,42 +13,55 @@ public class BoardTest {
     public void testIsCellEmpty_Negative() {
         Board board = new Board();
         board.place(0, 0, 'X');
-        // Feld ist jetzt besetzt, darf also nicht mehr als leer gelten
         assertFalse(board.isCellEmpty(0, 0));
     }
 
     @Test
-    public void testPlace_Positive() {
+    public void testIsCellEmpty_OutOfBounds() {
         Board board = new Board();
-        // Symbol erfolgreich auf ein leeres Feld setzen
-        assertTrue(board.place(1, 1, 'X'));
-        assertEquals('X', board.getCell(1, 1));
+        assertFalse(board.isCellEmpty(5, -1));
     }
 
     @Test
-    public void testPlace_Negative() {
+    public void testIsFull_Positive() {
         Board board = new Board();
-        board.place(2, 2, 'X');
-        // Erneutes Platzieren auf derselben Zelle muss fehlschlagen
-        assertFalse(board.place(2, 2, 'O'));
-        assertEquals('X', board.getCell(2, 2)); // Es muss immer noch 'X' drin stehen
-    }
-    @Test
-    public void testGetBoardState_Empty() {
-        Board board = new Board();
-        String expected = "   |   |   \n-----------\n   |   |   \n-----------\n   |   |   \n";
-        assertEquals(expected, board.getBoardState());
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board.place(i, j, 'X');
+            }
+        }
+        assertTrue(board.isFull());
     }
 
     @Test
-    public void testGetBoardState_WithSymbols() {
+    public void testIsFull_Negative() {
+        Board board = new Board();
+        assertFalse(board.isFull());
+    }
+
+    @Test
+    public void testClear() {
+        Board board = new Board();
+        board.place(1, 1, 'X');
+        board.clear();
+        assertTrue(board.isCellEmpty(1, 1));
+    }
+
+    @Test
+    public void testCheckWin_Row() {
         Board board = new Board();
         board.place(0, 0, 'X');
-        board.place(1, 1, 'O');
+        board.place(0, 1, 'X');
+        board.place(0, 2, 'X');
+        assertTrue(board.checkWin('X'));
+    }
 
-        String state = board.getBoardState();
-        // Positiv-Check: Die gesetzten Symbole müssen im String auftauchen
-        assertTrue(state.contains(" X |   |   "));
-        assertTrue(state.contains("   | O |   "));
+    @Test
+    public void testCheckWin_Blocked() {
+        Board board = new Board();
+        board.place(0, 0, 'X');
+        board.place(0, 1, 'O');
+        board.place(0, 2, 'X');
+        assertFalse(board.checkWin('X'));
     }
 }

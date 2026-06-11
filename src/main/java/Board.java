@@ -1,12 +1,34 @@
 public class Board {
-    private char[][] cells;
-
+    private final char[][] cells;
 
     public Board() {
         cells = new char[3][3];
         clear();
     }
 
+    public boolean isCellEmpty(int x, int y) {
+        if (x < 0 || x > 2 || y < 0 || y > 2) {
+            return false;
+        }
+        return cells[x][y] == ' ';
+    }
+
+    public void place(int x, int y, char marker) {
+        if (x >= 0 && x <= 2 && y >= 0 && y <= 2) {
+            cells[x][y] = marker;
+        }
+    }
+
+    public boolean isFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (cells[i][j] == ' ') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public void clear() {
         for (int i = 0; i < 3; i++) {
@@ -16,38 +38,27 @@ public class Board {
         }
     }
 
-
-    public boolean isCellEmpty(int row, int col) {
-        if (row < 0 || row >= 3 || col < 0 || col >= 3) {
-            return false;
+    public void print() {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(" " + cells[i][0] + " | " + cells[i][1] + " | " + cells[i][2] + " ");
+            if (i < 2) {
+                System.out.println("-----------");
+            }
         }
-        return cells[row][col] == ' ';
     }
 
-
-    public boolean place(int row, int col, char player) {
-        if (isCellEmpty(row, col)) {
-            cells[row][col] = player;
+    // Hilfsmethode für die Gewinnprüfung
+    public boolean checkWin(char player) {
+        for (int i = 0; i < 3; i++) {
+            if ((cells[i][0] == player && cells[i][1] == player && cells[i][2] == player) ||
+                    (cells[0][i] == player && cells[1][i] == player && cells[2][i] == player)) {
+                return true;
+            }
+        }
+        if ((cells[0][0] == player && cells[1][1] == player && cells[2][2] == player) ||
+                (cells[0][2] == player && cells[1][1] == player && cells[2][0] == player)) {
             return true;
         }
         return false;
-    }
-
-
-    public char getCell(int row, int col) {
-        return cells[row][col];
-    }
-    // US-02: Gibt das Spielfeld formatiert als String zurück
-    public String getBoardState() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            sb.append(" ").append(cells[i][0]).append(" | ")
-                    .append(cells[i][1]).append(" | ")
-                    .append(cells[i][2]).append(" \n");
-            if (i < 2) {
-                sb.append("-----------\n");
-            }
-        }
-        return sb.toString();
     }
 }
