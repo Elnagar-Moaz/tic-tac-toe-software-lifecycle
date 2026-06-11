@@ -60,13 +60,13 @@ public class TicTacToe {
         boolean validMove = false;
 
         while (!validMove) {
-            System.out.print("row (0-2): ");
+            System.out.print("Row [1-3]: ");
             if (scanner.hasNextInt()) {
-                row = scanner.nextInt();
+                row = scanner.nextInt()-1;
             }
-            System.out.print("column (0-2): ");
+            System.out.print("Column [1-3]: ");
             if (scanner.hasNextInt()) {
-                col = scanner.nextInt();
+                col = scanner.nextInt()-1;
             }
 
             if (board.isCellEmpty(row, col)) {
