@@ -40,7 +40,7 @@ public class TicTacToe {
             int[] move = getValidMove(scanner);
             board.place(move[0], move[1], currentPlayer.getMarker());
 
-            if (board.checkWin(currentPlayer.getMarker())) {
+            if (hasWinner()) { // 🟢 UML-konform geändert
                 board.print();
                 System.out.println("Player " + currentPlayer.getMarker() + " wins!");
                 gameOver = true;
@@ -62,11 +62,16 @@ public class TicTacToe {
         while (!validMove) {
             System.out.print("Row [1-3]: ");
             if (scanner.hasNextInt()) {
-                row = scanner.nextInt()-1;
+                row = scanner.nextInt() - 1;
+            } else {
+                scanner.next(); // 🟢 FIX: Ungültigen Buchstaben verwerfen
             }
+
             System.out.print("Column [1-3]: ");
             if (scanner.hasNextInt()) {
-                col = scanner.nextInt()-1;
+                col = scanner.nextInt() - 1;
+            } else {
+                scanner.next(); // 🟢 FIX: Ungültigen Buchstaben verwerfen
             }
 
             if (board.isCellEmpty(row, col)) {
@@ -80,6 +85,11 @@ public class TicTacToe {
 
     private void switchCurrentPlayer() {
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
+    }
+
+    // 🟢 HINZUGEFÜGT: Erfüllt exakt das geforderte UML-Klassendiagramm
+    private boolean hasWinner() {
+        return board.checkWin(currentPlayer.getMarker());
     }
 
     public static void main(String[] args) {
