@@ -64,14 +64,14 @@ public class TicTacToe {
             if (scanner.hasNextInt()) {
                 row = scanner.nextInt() - 1;
             } else {
-                scanner.next(); // 🟢 FIX: Ungültigen Buchstaben verwerfen
+                scanner.next();
             }
 
             System.out.print("Column [1-3]: ");
             if (scanner.hasNextInt()) {
                 col = scanner.nextInt() - 1;
             } else {
-                scanner.next(); // 🟢 FIX: Ungültigen Buchstaben verwerfen
+                scanner.next();
             }
 
             if (board.isCellEmpty(row, col)) {
@@ -87,7 +87,7 @@ public class TicTacToe {
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
-    // 🟢 HINZUGEFÜGT: Erfüllt exakt das geforderte UML-Klassendiagramm
+
     private boolean hasWinner() {
         return board.checkWin(currentPlayer.getMarker());
     }
