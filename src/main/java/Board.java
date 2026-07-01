@@ -66,7 +66,6 @@ public class Board {
         System.out.println();
     }
 
-    // Hilfsmethode für die Gewinnprüfung
     public boolean checkWin(char player) {
         for (int i = 0; i < 3; i++) {
             if ((cells[i][0] == player && cells[i][1] == player && cells[i][2] == player) ||
