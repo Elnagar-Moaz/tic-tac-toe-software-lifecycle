@@ -40,7 +40,7 @@ public class TicTacToe {
             int[] move = getValidMove(scanner);
             board.place(move[0], move[1], currentPlayer.getMarker());
 
-            if (hasWinner()) { // 🟢 UML-konform geändert
+            if (hasWinner()) {
                 board.print();
                 System.out.println("Player " + currentPlayer.getMarker() + " wins!");
                 gameOver = true;
@@ -86,7 +86,6 @@ public class TicTacToe {
     private void switchCurrentPlayer() {
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
-
 
     private boolean hasWinner() {
         return board.checkWin(currentPlayer.getMarker());
